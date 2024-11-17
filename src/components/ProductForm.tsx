@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-misused-promises */
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Box, Button, Select, TextField } from "@radix-ui/themes";
 import { useState } from "react";
@@ -49,7 +50,12 @@ const ProductForm = ({ product, onSubmit }: Props) => {
     >
       <Box>
         <TextField.Root className="max-w-sm">
-          <TextField.Input placeholder="Name" {...register("name")} size="3" />
+          <TextField.Input
+            autoFocus
+            placeholder="Name"
+            {...register("name")}
+            size="3"
+          />
         </TextField.Root>
         <ErrorMessage error={errors.name} />
       </Box>
@@ -75,7 +81,7 @@ const ProductForm = ({ product, onSubmit }: Props) => {
               defaultValue={product?.categoryId.toString() || ""}
               onValueChange={(value) => field.onChange(+value)}
             >
-              <Select.Trigger placeholder="Category" />
+              <Select.Trigger aria-label="Category" placeholder="Category" />
               <Select.Content>
                 <Select.Group>
                   {categories?.map((category) => (
@@ -93,7 +99,7 @@ const ProductForm = ({ product, onSubmit }: Props) => {
         />
         <ErrorMessage error={errors.categoryId} />
       </Box>
-      <Button size="3" disabled={isSubmitting}>
+      <Button size="3" aria-label="submit" disabled={isSubmitting}>
         Submit
       </Button>
     </form>
